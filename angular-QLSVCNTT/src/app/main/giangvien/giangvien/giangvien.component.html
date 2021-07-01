@@ -1,0 +1,268 @@
+<div class="breadcrumbs" id="breadcrumbs">
+  <ul class="breadcrumb">
+      <li>
+          <i class="ace-icon fa fa-home home-icon"></i>
+          <a href="#">Trang chủ</a>
+      </li>
+      <li class="active">Quản lý sinh viên</li>
+  </ul>
+  <div class="nav-search">
+      <p class="pull-right no-margin">
+          <a (click)="CreategiangvienModal()" class="btn btn-success btn-xs"> <i class="fa fa-plus"></i>&nbsp;Thêm </a>
+      </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <p-panel header="Tìm kiếm" [style]="{'margin-top': '2px'}">
+            <form class="form-horizontal" role="form" [formGroup]="formsearch" (ngSubmit)="gvsearch()">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label no-padding-right"> Họ Tên</label>
+                    <div class="col-sm-2">
+                        <input formControlName="TenGiangVien" type="text" placeholder="Họ tên"  />
+                    </div>
+
+                    <label class="col-sm-1 control-label no-padding-right"style="margin-left: -1cm;"> Mã GV</label>
+                    <div class="col-sm-4">
+                        <input formControlName="MaGiangVien" type="text" placeholder="Mã Giảng Viên"/>
+                    </div>
+
+                    <label class="col-sm-1 control-label no-padding-right"style="margin-left: -1.5cm;"></label>
+                    <div class="col-sm-1">
+                        <button (click)="gvsearch()" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+
+            </form>
+        </p-panel>
+        <p-table selectionMode="single" [value]="giangviens" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4%; text-align: center;">Mã GV</th>
+                    <th style="width: 4%; text-align: center;">Ảnh</th>
+                    <th style="width: 7%; text-align: center;">Họ Tên</th>
+                    <th style="width: 4%; text-align: center;">Email</th>
+                    <th style="width: 4%; text-align: center;">Điện Thoại</th>
+                    <th style="width: 8%; text-align: center;">Chức Vụ</th>
+                    <th style="text-align: center; width: 8%;">Chuyên Ngành</th>
+                    <th style="width: 7%; text-align: center;">Tác vụ</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-i="rowIndex">
+                <tr>
+                    <td>{{ item.maGiangVien }}</td>
+                    <td style="text-align: center;"><img style="width: 37px; height: 40px; "src="{{ item.hinhAnh }}" /></td>
+                    <td>{{ item.tenGiangVien }}</td>
+                    <td>{{ item.email}}</td>
+                    <td>{{ item.soDienThoai }}</td>
+                    <td>{{ item.chucVu }}</td>
+                    <td>{{ item.gV_MaChuyenNganh }}</td>
+                    <td class="action-col">
+                        <div class="btn-group">
+                            <button title="" class="btn btn-xs btn-white btn-default">
+                                <i class="ace-icon fa fa-eye"></i>
+                            </button>
+                            <button title="" class="btn btn-xs btn-white btn-default" (click)="UpdategiangvienModal(item)">
+                                <i class="ace-icon fa fa-edit"></i>
+                            </button>
+                            <button title="" class="btn btn-xs btn-white btn-default" (click)="DeletegiangvienModal(item)">
+                                <i class="ace-icon fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- PAGE CONTENT ENDS -->
+     </div>
+  <div class="col-xs-12" style="text-align: right; ">
+    <ngb-pagination [collectionSize]="totalRecords" [pageSize]="pageSize" [(page)]="page" [maxSize]="10" [rotate]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+  </div>
+  <!-- /.col -->
+</div>
+
+<!-- /.row create - upadate -->
+<div *ngIf="showUpdateModal" id="CreategiangvienModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg full-height-modal">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 *ngIf="isCreate" class="modal-title">Nhập thông tin người dùng</h4>
+              <h4 *ngIf="!isCreate" class="modal-title">Sửa thông tin người dùng</h4>
+          </div>
+
+          <form class="modal-body no-padding" *ngIf="doneSetupForm" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal modal-body no-padding utehy-form">
+
+            <!-- /Form group 1 -->
+            <div class="form-group" style=" margin-top: 10px;">
+                  <label class="col-sm-2 control-label no-padding-right"> Ảnh đại diện</label>
+                  <div class="col-sm-10">
+                      <p-fileUpload #file_image mode="advanced" [showUploadButton]="false" cancelLabel="Hủy" chooseLabel="Chọn ảnh" multiple="false" accept="image/*" maxFileSize="1000000">
+                          <ng-template pTemplate="content">
+                              <img *ngIf="giangvien && giangvien.hinhAnh" style="height: 100px; width: 100px;" [src]="giangvien.hinhAnh" />
+                          </ng-template>
+                      </p-fileUpload>
+                  </div>
+              </div>
+
+            <!-- /Form group 2-->
+              <div class="form-group">
+                  <label class="col-sm-2 control-label no-padding-right"> Họ tên(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" placeholder="Họ tên" formControlName="tenGiangVien" />
+                      <div *ngIf="submitted && f.tenGiangVien.errors" class="invalid-feedback">
+                          <div *ngIf="f.tenGiangVien.errors.required">Họ tên là bắt buộc</div>
+                      </div>
+                  </div>
+                  <label class="col-sm-2 control-label no-padding-right"> Mã Sinh Viên(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type = "text" placeholder = "Mã Sinh Viên" formControlName="maGiangVien">
+                      <div *ngIf="submitted && f.maGiangVien.errors" class="invalid-feedback">
+                          <div *ngIf="f.maGiangVien.errors.required">Mã sinh viên là bắt buộc</div>
+                      </div>
+                  </div>
+              </div>
+
+            <!-- /Form group 3 -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> Quê Quán</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="queQuan" placeholder="Quê Quán" />
+                  </div>
+
+                <label class="col-sm-2 control-label no-padding-right"> Ngày Sinh(<span style="color: red;">*</span>)</label>
+                <div class="col-sm-4">
+                  <p-calendar type = "date" formControlName="ngaySinh" [dateFormat]="dateFormat"  [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar>
+                  <div *ngIf="submitted && f.ngaySinh.errors" class="invalid-feedback">
+                    <div *ngIf="f.ngaySinh.errors.required">Ngày sinh là bắt buộc</div>
+                  </div>
+                </div>
+              </div>
+
+            <!-- /Form group 4 -->
+              <div class="form-group">
+                  <label class="col-sm-2 control-label no-padding-right"> Nơi Sinh(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="noiSinh" placeholder="Nơi Sinh" />
+                  </div>
+
+                  <label class="col-sm-2 control-label no-padding-right"> Email(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="email" formControlName="email" placeholder="Email" />
+                      <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                          <div *ngIf="f.email.errors.required">Email là bắt buộc</div>
+                          <div *ngIf="f.email.errors.email">Địa chỉ email không đúng định dạng</div>
+                      </div>
+                  </div>
+              </div>
+
+            <!-- /Form group 5 -->
+              <div class="form-group">
+                  <label class="col-sm-2 control-label no-padding-right"> Giới Tính(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <p-dropdown [options]="genders" formControlName="gioiTinh" [style]="{'width':'100%'}"></p-dropdown>
+                      <div *ngIf="submitted && f.gioiTinh.errors" class="invalid-feedback">
+                          <div *ngIf="f.gioiTinh.errors.required">Giới tính là bắt buộc</div>
+                      </div>
+                  </div>
+
+                  <label class="col-sm-2 control-label no-padding-right"> Quốc Tịch(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="quocTich" placeholder="Quốc Tịch" />
+                  </div>
+              </div>
+
+            <!-- /Form group 6 -->
+              <div class="form-group">
+                  <label class="col-sm-2 control-label no-padding-right"> Dân Tộc(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="danToc" placeholder="Dân Tộc" />
+                  </div>
+
+                  <label class="col-sm-2 control-label no-padding-right">Tôn Giáo(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="tonGiao" placeholder="Tôn Giáo" />
+                  </div>
+              </div>
+
+            <!-- /Form group 7 -->
+              <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> ĐC Thường Trú(<span style="color: red;">*</span>)</label>
+                <div class="col-sm-4">
+                    <input type="text" formControlName="noiThuongTru" placeholder="Địa Chỉ Thường Trú" />
+                    <div *ngIf="submitted && f.noiThuongTru.errors" class="invalid-feedback">
+                      <div *ngIf="f.noiThuongTru.errors.required">Địa Chỉ thường trú là bắt buộc</div>
+                    </div>
+                </div>
+
+                <label class="col-sm-2 control-label no-padding-right"> Đối Tượng Trợ Cấp(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="doiTuongTroCap" placeholder="Họ Tên - SĐT" />
+                  </div>
+              </div>
+
+            <!-- /Form group 8 -->
+              <div class="form-group">
+                  <label class="col-sm-2 control-label no-padding-right"> Điện Thoại(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="soDienThoai" placeholder="Số Điện Thoại" maxlength = "10" />
+                      <div *ngIf="submitted && f.soDienThoai.errors" class="invalid-feedback">
+                          <div *ngIf="f.soDienThoai.errors.required">Số điện thoại là bắt buộc</div>
+                      </div>
+                  </div>
+
+                  <label class="col-sm-2 control-label no-padding-right"> CMTND/CCCD(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="cMTND" placeholder="CMTND/CCCD" maxlength = "12" />
+                  </div>
+               </div>
+
+            <!-- /Form group 9 -->
+               <div class="form-group">
+                  <label class="col-sm-2 control-label no-padding-right"> Lớp(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="sV_MaLop" placeholder="Mã Lớp" />
+                      <div *ngIf="submitted && f.sV_MaLop.errors" class="invalid-feedback">
+                          <div *ngIf="f.sV_MaLop.errors.required">Mã lớp là bắt buộc</div>
+                      </div>
+                  </div>
+
+                  <label class="col-sm-2 control-label no-padding-right"> Tình Trạng(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="text" formControlName="tinhTrang" placeholder="Tình trạng" />
+                  </div>
+              </div>
+
+            <!-- /Form group 10 -->
+              <div class="form-group">
+                  <label class="col-sm-2 control-label no-padding-right"> Mật khẩu(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="password" formControlName="matKhau" placeholder="Mật khẩu" />
+                      <div *ngIf="submitted && f.matKhau.errors" class="invalid-feedback">
+                          <div *ngIf="f.matKhau.errors.required">Mật khẩu là bắt buộc</div>
+                          <div *ngIf="f.matKhau.errors.matKhau">Độ dài mật khẩu tối thiệu phải là 6 ký tự và phải chứa ký tự đặc biệt @#!$%&*</div>
+                      </div>
+                  </div>
+                  <label class="col-sm-2 control-label no-padding-right"> Nhập lại mật khẩu(<span style="color: red;">*</span>)</label>
+                  <div class="col-sm-4">
+                      <input type="password" formControlName="nhaplaimatkhau" placeholder="Nhập lại mật khẩu" />
+                      <div *ngIf="submitted && f.nhaplaimatkhau.errors" class="invalid-feedback">
+                          <div *ngIf="f.nhaplaimatkhau.errors.required">Xác nhận lại mật khẩu là bắt buộc</div>
+                          <div *ngIf="f.nhaplaimatkhau.errors.mustMatch">Xác thực lại mật khẩu không đúng</div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default btn-sm" (click)="Reset()" ><i class="fa fa-bell"></i> Làm mới</button>
+                  <button type="submit" class="btn btn-success btn-sm btn-submit"><i class="fa fa-save"></i> Đồng ý</button>
+                  <button type="button" class="btn btn-default btn-sm btn-danger" (click)="ClosegiangvienModal()"><i class="fa fa-times"></i> Đóng lại</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+
+

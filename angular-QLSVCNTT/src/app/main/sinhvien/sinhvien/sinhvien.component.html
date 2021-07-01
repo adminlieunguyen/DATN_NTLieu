@@ -1,0 +1,482 @@
+<div class="breadcrumbs" id="breadcrumbs">
+    <ul class="breadcrumb">
+        <li>
+            <i class="ace-icon fa fa-home home-icon"></i>
+            <a href="#">Trang chủ</a>
+        </li>
+        <li class="active">Quản lý sinh viên</li>
+    </ul>
+    <div class="nav-search">
+        <p class="pull-right no-margin">
+            <a (click)="CreatesinhvienModal()" class="btn btn-success btn-xs"> <i class="fa fa-plus"></i>&nbsp;Thêm sinh viên</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <!-- PAGE CONTENT BEGINS -->
+        <p-panel header="Tìm kiếm" [style]="{'margin-top': '2px'}">
+            <form class="form-horizontal" role="form" [formGroup]="formsearch" (ngSubmit)="search()">
+                <div class="form-group" style="margin-top: 10px;">
+                    <label class="col-sm-1 control-label no-padding-right" style="margin-left: -1.5cm;"> Họ Tên</label>
+                    <div class="col-sm-5">
+                        <input formControlName="TenSinhVien" type="text" placeholder="Họ tên" />
+                    </div>
+
+                    <!-- <label class="col-sm-1 control-label no-padding-right"style="margin-left: -1.5cm;"> Mã Lớp</label>
+                      <div class="col-sm-2">
+                          <input formControlName="SV_MaLop" type="text" placeholder="Mã Lớp"/>
+                      </div> -->
+
+                    <label class="col-sm-1 control-label no-padding-right" style="margin-left: -2cm;"> ĐT </label>
+                    <div class="col-sm-5">
+                        <input formControlName="SoDienThoai" maxlength="10" type="text" placeholder="Số điện thoại" />
+                    </div>
+
+                    <label class="col-sm-1 control-label no-padding-right" style="margin-left: -2cm;"></label>
+                    <div class="col-sm-1">
+                        <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
+        </p-panel>
+
+        <p-table selectionMode="single" [value]="sinhviens" styleClass="p-datatable-gridlines">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4%; text-align: center;">Mã SV</th>
+                    <th style="width: 5%; text-align: center;">Ảnh</th>
+                    <th style="width: 8%; text-align: center;">Họ Tên</th>
+                    <th style="width: 6%; text-align: center;">Điện Thoại</th>
+                    <th style="width: 4%; text-align: center;">Lớp</th>
+                    <th style="width: 6%; text-align: center;">Chuyên Ngành</th>
+                    <th style="width: 8%; text-align: center;">Bộ Môn</th>
+                    <th style="width: 9%; text-align: center;">Tác vụ</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-i="rowIndex">
+                <tr>
+                    <td>{{ item.maSinhVien }}</td>
+                    <td style="text-align: center;"><img style="width: 40px; height: 40px;" src="{{ item.hinhAnh }}" /></td>
+                    <td>{{ item.tenSinhVien }}</td>
+                    <td>{{ item.soDienThoai }}</td>
+                    <td>{{ item.sV_MaLop }}</td>
+                    <td>{{ item.tenChuyenNganh }}</td>
+                    <td>{{ item.tenBoMon }}</td>
+                    <td class="action-col">
+                        <div class="btn-group">
+                            <button title="" class="btn btn-xs btn-white btn-default" (click)="ketquaht(item)">
+                                <i class="glyphicon glyphicon-bookmark"></i>
+                            </button>
+                            <button title="" class="btn btn-xs btn-white btn-default" (click)="DetailModal(item)">
+                                <i class="ace-icon fa fa-eye"></i>
+                            </button>
+                            <button title="" class="btn btn-xs btn-white btn-default" (click)="UpdatesinhvienModal(item)">
+                                <i class="ace-icon fa fa-edit"></i>
+                            </button>
+                            <button title="" class="btn btn-xs btn-white btn-default" (click)="DeletesinhvienModal(item)">
+                                <i class="ace-icon fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+        <!-- PAGE CONTENT ENDS -->
+    </div>
+    <div class="col-xs-12" style="text-align: right;">
+        <ngb-pagination [collectionSize]="totalRecords" [pageSize]="pageSize" [(page)]="pageIndex" [maxSize]="10" [rotate]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+    </div>
+    <!-- /.col -->
+</div>
+
+<!-- /.row create - upadate -->
+<div *ngIf="showUpdateModal" id="CreatesinhvienModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg full-height-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 *ngIf="isCreate" class="modal-title">Nhập thông tin người dùng</h4>
+                <h4 *ngIf="!isCreate" class="modal-title">Sửa thông tin người dùng</h4>
+            </div>
+
+            <form class="modal-body no-padding" *ngIf="doneSetupForm" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal modal-body no-padding utehy-form">
+                <!-- /Form group 1 -->
+                <div class="form-group" style="margin-top: 10px;">
+                    <label class="col-sm-2 control-label no-padding-right"> Ảnh đại diện</label>
+                    <div class="col-sm-10">
+                        <p-fileUpload #file_image mode="advanced" [showUploadButton]="false" cancelLabel="Hủy" chooseLabel="Chọn ảnh" multiple="false" accept="image/*" maxFileSize="1000000">
+                            <ng-template pTemplate="content">
+                                <img *ngIf="sinhvien && sinhvien.hinhAnh" style="height: 100px; width: 100px;" [src]="sinhvien.hinhAnh" />
+                            </ng-template>
+                        </p-fileUpload>
+                    </div>
+                </div>
+
+                <!-- /Form group 2-->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Họ tên(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Họ tên" formControlName="tenSinhVien" />
+                        <div *ngIf="submitted && f.tenSinhVien.errors" class="invalid-feedback">
+                            <div *ngIf="f.tenSinhVien.errors.required">Họ tên là bắt buộc</div>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 control-label no-padding-right"> Mã Sinh Viên(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" placeholder="Mã Sinh Viên" formControlName="maSinhVien" maxlength="8"/>
+                        <div *ngIf="submitted && f.maSinhVien.errors" class="invalid-feedback">
+                            <div *ngIf="f.maSinhVien.errors.required">Mã sinh viên là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /Form group 3 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Giới Tính(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <p-dropdown [options]="genders" formControlName="gioiTinh" [style]="{'width':'100%'}"></p-dropdown>
+                        <div *ngIf="submitted && f.gioiTinh.errors" class="invalid-feedback">
+                            <div *ngIf="f.gioiTinh.errors.required">Giới tính là bắt buộc</div>
+                        </div>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Ngày Sinh(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <p-calendar type="date" formControlName="ngaySinh" [dateFormat]="dateFormat" [locale]="locale_vn" [showIcon]="true" inputId="icon"></p-calendar>
+                        <div *ngIf="submitted && f.ngaySinh.errors" class="invalid-feedback">
+                            <div *ngIf="f.ngaySinh.errors.required">Ngày sinh là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /Form group 4 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Nơi Sinh(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="noiSinh" placeholder="Nơi Sinh" />
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Email(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="email" formControlName="email" placeholder="Email" />
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email là bắt buộc</div>
+                            <div *ngIf="f.email.errors.email">Địa chỉ email không đúng định dạng</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /Form group 5 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Quê Quán</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="queQuan" placeholder="Quê Quán" />
+                    </div>
+                    <label class="col-sm-2 control-label no-padding-right"> Quốc Tịch(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="quocTich" placeholder="Quốc Tịch" />
+                    </div>
+                </div>
+
+                <!-- /Form group 6 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Dân Tộc(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <p-dropdown [options]="dantocs" formControlName="danToc" [style]="{'width':'100%'}"></p-dropdown>
+                        <div *ngIf="submitted && f.danToc.errors" class="invalid-feedback">
+                            <div *ngIf="f.danToc.errors.required">Dân tộc là bắt buộc</div>
+                        </div>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right">Tôn Giáo(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="tonGiao" placeholder="Tôn Giáo" />
+                    </div>
+                </div>
+
+                <!-- /Form group 7 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> ĐC Thường Trú(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="noiThuongTru" placeholder="Địa Chỉ Thường Trú" />
+                        <div *ngIf="submitted && f.noiThuongTru.errors" class="invalid-feedback">
+                            <div *ngIf="f.noiThuongTru.errors.required">Địa Chỉ thường trú là bắt buộc</div>
+                        </div>
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Đối Tượng Trợ Cấp(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="doiTuongTroCap" placeholder="Họ Tên - SĐT" />
+                    </div>
+                </div>
+
+                <!-- /Form group 8 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Điện Thoại(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="soDienThoai" placeholder="Số Điện Thoại" maxlength="10" />
+                        <div *ngIf="submitted && f.soDienThoai.errors" class="invalid-feedback">
+                            <div *ngIf="f.soDienThoai.errors.required">Số điện thoại là bắt buộc</div>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 control-label no-padding-right"> Lớp(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-4">
+                        <input type="text" formControlName="sV_MaLop" placeholder="Mã Lớp" />
+                        <div *ngIf="submitted && f.sV_MaLop.errors" class="invalid-feedback">
+                            <div *ngIf="f.sV_MaLop.errors.required">Mã lớp là bắt buộc</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /Form group 9 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Tình Trạng(<span style="color: red;">*</span>)</label>
+                    <div class="col-sm-8">
+                        <input type="text" formControlName="tinhTrang" placeholder="Tình trạng" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" (click)="Reset()"><i class="fa fa-bell"></i> Làm mới</button>
+                    <button type="submit" class="btn btn-success btn-sm btn-submit"><i class="fa fa-save"></i> Đồng ý</button>
+                    <button type="button" class="btn btn-default btn-sm btn-danger" (click)="ClosesinhvienModal()"><i class="fa fa-times"></i> Đóng lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- /.row Detail-->
+<div *ngIf="showDetailModal" id="DetailModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg full-height-modal">
+        <div class="modal-content" >
+            <div class="modal-header">
+                Thông tin sinh viên : {{sinhvien.maSinhVien}} - {{sinhvien.tenSinhVien}} - {{sinhvien.sV_MaLop}}
+            </div>
+            <form class="modal-body no-padding" *ngIf="doneSetupForm" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal modal-body no-padding utehy-form">
+                <!-- /Form group 1 -->
+                <div class="form-group" style="margin-top: 10px; margin-left: 10px;">
+                    <div class="col-sm-10">
+                        <div style="text-align: center;"><img style="height: 200px; width: 180px; margin-left: 150px;" [src]="sinhvien.hinhAnh" /></div>
+                    </div>
+                </div>
+                <br />
+                <hr style="width: 70%; background-color: royalblue;" />
+
+                <!-- /Form group 2 -->
+                <div class="form-group"style="padding-left: -50px;" >
+                    <label class="col-sm-2 control-label no-padding-right"> Họ tên</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.tenSinhVien}}" />
+                    </div>
+                    <label class="col-sm-2 control-label no-padding-right"> Mã Sinh Viên</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.maSinhVien}}" />
+                    </div>
+                </div>
+
+                <!-- /Form group 3 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Quê Quán</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.queQuan}}" />
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Ngày Sinh</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.ngaySinh| date: 'dd-MM-yyyy'}}" />
+                    </div>
+                </div>
+
+                <!-- /Form group 4 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Nơi Sinh</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.noiSinh}}" />
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Email</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.email}}" />
+                    </div>
+                </div>
+
+                <!-- /Form group 5 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Giới Tính</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.gioiTinh}}" />
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Quốc Tịch</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.quocTich}}" />
+                    </div>
+                </div>
+
+                <!-- /Form group 6 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Dân Tộc</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.danToc}}" />
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right">Tôn Giáo</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.tonGiao}}" />
+                    </div>
+                </div>
+
+                <!-- /Form group 7 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> ĐC Thường Trú</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.noiThuongTru}}" />
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Đối Tượng Trợ Cấp</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.doiTuongTroCap}}" />
+                    </div>
+                </div>
+
+                <!-- /Form group 8 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Điện Thoại</label>
+                    <div class="col-sm-4">
+                        <input type="text" maxlength="10" value="{{sinhvien.soDienThoai}}" />
+                    </div>
+
+                    <label class="col-sm-2 control-label no-padding-right"> Mã Lớp</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.sV_MaLop}}" />
+                    </div>
+                </div>
+
+                <!-- /Form group 9 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label no-padding-right"> Tên Lớp</label>
+                    <div class="col-sm-4">
+                        <input type="text" value="{{sinhvien.tenLop}}" />
+                    </div>
+                    <label class="col-sm-2 control-label no-padding-right"> Chuyên Ngành</label>
+                    <div class="col-sm-4">
+                        <input type="text"value="{{sinhvien.tenChuyenNganh}}"  />
+                    </div>
+                </div>
+
+            <!-- Form group 10 -->
+            <div class="form-group">
+                
+                <label class="col-sm-2 control-label no-padding-right"> Bộ Môn</label>
+                <div class="col-sm-10">
+                    <input type="text"value="{{sinhvien.tenBoMon}}"  />
+                </div>
+                
+            </div>
+
+            
+            <!-- Form group 11 -->
+            <div class="form-group">
+                <label class="col-sm-2 control-label no-padding-right"> Tình Trạng</label>
+                <div class="col-sm-10">
+                    <input type="text"value="{{sinhvien.tinhTrang}}"  />
+                </div>
+            </div>
+            
+
+            <hr style="width: 70%; background-color: royalblue;" />
+
+        <!-- Kết Quả -->
+        <div class="form-group">
+            <div style="margin-left: 50px;">
+                <h5><b>Kết Quả Học Tập</b></h5>
+                <hr style="width: 100px; margin-left: -5px;" />
+            </div>
+            <div style="margin-left: 50px;">
+                <h5><b>ĐiểmTB tích lũy (hệ10):{{kq.diemtb}} </b></h5>
+                <h5><b>Xếp Loại:{{kq.xeploai}}} </b></h5>
+                <hr style="width: 100px; margin-left: -5px;" />
+            </div>
+        </div>
+<!-- 
+            <p-table selectionMode="single" [value]="kq" styleClass="p-datatable-gridlines">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4%; text-align: center;">Mã Môn</th>
+                        <th style="width: 10%; text-align: center;">Tên Môn</th>
+                        <th style="width: 6%; text-align: center;">Số Tín Chỉ</th>
+                        <th style="width: 6%; text-align: center;">Điểm</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-i="rowIndex">
+                    <tr>
+                        <td>{{ item.maMon }}</td>
+                        <td>{{ item.tenMon }}</td>
+                        <td>{{ item.soTC }}</td>
+                        <td>{{ item.diem }}</td>
+                    </tr>
+                </ng-template>
+            </p-table> -->
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm btn-danger" (click)="CloseDetailModal()"><i class="fa fa-times"></i> Đóng lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- /.row Diem-->
+<div *ngIf="showDiemModal" id="DiemModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg full-height-modal">
+        <div class="modal-content" >
+            <div class="modal-header">
+                Thông tin điểm sinh viên : {{kq.maSinhVien}} - {{kq.tenSinhVien}} - {{kq.tinhTrang}}
+            </div>
+            <form class="modal-body no-padding" *ngIf="doneSetupForm" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal modal-body no-padding utehy-form">
+
+                <!-- Form group 10 -->
+            <div class="form-group">
+                <div style="margin-left: 50px;">
+                    <h5><b>Kết Quả Học Tập</b></h5>
+                    <hr style="width: 100px; margin-left: -5px;" />
+                </div>
+                <div style="margin-left: 50px;">
+                    <h5><b>ĐiểmTB tích lũy (hệ10):{{kq.maSinhVien}}  </b></h5>
+                    <h5><b>Xếp Loại: </b>{{kq.maSinhVien}} </h5>
+                    <hr style="width: 100px; margin-left: -5px;" />
+                </div>
+            </div>
+
+            <hr style="width: 70%; background-color: royalblue;" />
+
+            <!-- Kết Quả -->
+
+            <p-table selectionMode="single" [value]="kq" styleClass="p-datatable-gridlines">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 4%; text-align: center;">Mã Môn</th>
+                        <th style="width: 10%; text-align: center;">Tên Môn</th>
+                        <th style="width: 6%; text-align: center;">Số Tín Chỉ</th>
+                        <th style="width: 6%; text-align: center;">Điểm</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-i="rowIndex">
+                    <tr>
+                        <td>{{ item.maMon }}</td>
+                        <td>{{ item.tenMon }}</td>
+                        <td>{{ item.soTC }}</td>
+                        <td>{{ item.diem }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm btn-danger" (click)="CloseDiemModal()"><i class="fa fa-times"></i> Đóng lại</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

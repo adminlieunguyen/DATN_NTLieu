@@ -1,0 +1,54 @@
+<div class="page-container" style="background: url(../assets/images/bn6111.jpg); display: right; background-size: cover">
+    <div class="page-login-box">
+        <div class="page-login-widget animated fadeInRight">
+            <h1>Đăng Nhập</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="ui-form-group">
+                    <input type="text" formControlName="username" placeholder="Tên tài khoản">
+                </div>
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Chưa nhập tài khoản!</div>
+                </div>
+                <div class="ui-form-group">
+                    <input type="password" formControlName="password" placeholder="Mật khẩu">
+                </div>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Chưa nhập mật khẩu!</div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input formControlName="remember" type="checkbox" class="ace">
+                        <span class="lbl">Ghi nhớ</span>
+                    </label>
+                </div>
+                <button style="background-color: brown" [disabled]="loginForm.invalid || loading" type="submit">Đăng Nhập</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- <body style="background-color:#D0D4B9;">
+  <div class="loginbox" >
+    <img src="../assets/images/logo2.png" class="avatar">
+     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <p>Tên Đăng Nhập</p>
+          <input type="text" name="" placeholder="Tên đăng nhập">
+          <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+            <div *ngIf="f.username.errors.required">Chưa nhập tài khoản!</div>
+          </div>
+
+          <p>Mật Khẩu</p>
+          <input type="password" name="" placeholder="Mật khẩu">
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required">Chưa nhập mật khẩu!</div>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input formControlName="remember" type="checkbox" class="ace">
+              <span class="lbl">Ghi nhớ</span>
+            </label>
+         </div>
+         <input [disabled]="loginForm.invalid || loading" type="submit"  name="login" value="Đăng Nhập">
+   </form>
+ </div>
+</body> -->
+
