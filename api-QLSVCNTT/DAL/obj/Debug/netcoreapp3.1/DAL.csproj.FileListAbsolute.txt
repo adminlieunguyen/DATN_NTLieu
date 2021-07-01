@@ -1,0 +1,72 @@
+F:\net core\BanOto\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+F:\net core\BanOto\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+F:\net core\BanOto\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+F:\net core\BanOto\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+F:\net core\BanOto\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+F:\net core\BanOto\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+F:\net core\BanOto\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+F:\net core\BanOto\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+F:\net core\BanOto\DAL\bin\Debug\netcoreapp3.1\Model.dll
+F:\net core\BanOto\DAL\bin\Debug\netcoreapp3.1\Model.pdb
+F:\net core\BanOto\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
+F:\net core\BanOto\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\bin\Debug\netcoreapp3.1\Model.dll
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\bin\Debug\netcoreapp3.1\Model.pdb
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+F:\STUDIES\DoAn5\api-banoto-master\api-banoto-master\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.dll
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.pdb
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+F:\STUDIES\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.dll
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.pdb
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+F:\DATN\BaiTapLon\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.dll
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.pdb
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+F:\DATN\BaiTapLon\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
+F:\DATN\Duan\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.deps.json
+F:\DATN\Duan\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.dll
+F:\DATN\Duan\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\DAL.pdb
+F:\DATN\Duan\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.dll
+F:\DATN\Duan\api-QLSVCNTT\DAL\bin\Debug\netcoreapp3.1\Model.pdb
+F:\DATN\Duan\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csprojAssemblyReference.cache
+F:\DATN\Duan\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfoInputs.cache
+F:\DATN\Duan\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.AssemblyInfo.cs
+F:\DATN\Duan\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CoreCompileInputs.cache
+F:\DATN\Duan\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.csproj.CopyComplete
+F:\DATN\Duan\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.dll
+F:\DATN\Duan\api-QLSVCNTT\DAL\obj\Debug\netcoreapp3.1\DAL.pdb
